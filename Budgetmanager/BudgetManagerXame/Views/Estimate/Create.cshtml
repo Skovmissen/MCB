@@ -1,0 +1,129 @@
+﻿@model BudgetManagerXame.Models.Estimate
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+@using (Html.BeginForm())
+{
+    <div class="Dropdown_Month">
+
+        @Html.DropDownListFor(m => m.Period, new SelectList(Model.Period, "Id", "Name"), "Vælg måned", new { @class = "dropdown", @onchange = "SelectionChanged(this.value)" })
+        @Html.ActionLink("Synkroniser konti", "Sync", "Budget", new { id = ViewBag.BudgetId, FiscalId = ViewBag.FiscalId, siteId = 1, firmName = ViewBag.FirmName, year = ViewBag.Year }, new { @class = "btn btn-default my-btn", @id = "Sync-btn" })
+    </div>
+
+    <table class="table-striped">
+        <tr>
+            <th>
+                Alle tal skal inddaterees i tusinde
+            </th>
+            <th class="head-cat-create">
+                @ViewBag.PeriodId
+            </th>
+        </tr>
+        @for (int j = 0; j < Model.FinanceGroup.Count; j++)
+        {
+            <tr>
+                <td>
+                    <b>@Model.FinanceGroup[j].Name</b>
+                </td>
+            </tr>
+            for (int i = 0; i < Model.Fap.Count; i++)
+
+            {
+                <tr>
+                    @if (Model.FinanceAccount[i].FinanceGroup == Model.FinanceGroup[j].Name)
+                        {
+                        <td>
+                            @Model.FinanceAccount[i].Name
+                        </td>
+
+                            <td>
+                                @Html.EditorFor(m => m.Fap[i].Estimate)
+                                @*@Html.HiddenFor(m => m.Fap[i].BudgetId)
+                                    @Html.HiddenFor(m => m.Fap[i].PeriodId)
+                                    @Html.HiddenFor(m => m.Fap[i].AccountId)*@
+                                <input type="hidden" id="budgetId" value="@Model.Fap[i].BudgetId" />
+                                <input type="hidden" id="PeriodId" value="@Model.Fap[i].PeriodId" />
+                                <input type="hidden" id="AccountId" value="@Model.Fap[i].AccountId" />
+
+                            </td>
+
+                    }
+
+                </tr>
+            }
+        }
+
+    </table>
+        <input type="button" value="Gem" id="gem" class="btn btn-default my-btn" />
+        @Html.ActionLink("Tilbage", "BudgetList", "Budget", new { id = ViewBag.FiscalId, firmName = ViewBag.FirmName }, null)
+}
+<div class="modal" style="display: none">
+    <div class="center"><img alt="" src="~/Content/ajax-loader.gif" /></div>
+
+</div>
+
+@section scripts {
+
+    <script type="text/javascript">
+        var element = null;
+        $('input').on('blur', function () {
+            var inputId = this.id;
+
+            console.log(inputId);
+            console.log($('[id*=' + inputId + ']').val());
+            console.log($(this).parent().children()[3].value);
+            var data = {};
+            data.Estimate = $('[id*=' + inputId + ']').val();
+            data.BudgetId = $('[id*=budgetId]').val();
+            data.PeriodId = $('[id*=PeriodId]').val();
+            data.AccountId = $(this).parent().children()[3].value;
+            console.log("running AJAJAXJAJ");
+            $.ajax({
+                type: "GET",
+                url: "/Estimate/UpdateDBNoRefresh",
+                data: data,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        var element = null;
+        $('#gem').click(function () {
+            var inputId = this.id;
+
+            console.log(inputId);
+            console.log($('[id*=' + inputId + ']').val());
+            console.log($(this).parent().children()[3].value);
+            var data = {};
+            data.Estimate = $('[id*=' + inputId + ']').val();
+            data.BudgetId = $('[id*=budgetId]').val();
+            data.PeriodId = $('[id*=PeriodId]').val();
+            data.AccountId = $(this).parent().children()[3].value;
+            console.log("running AJAJAXJAJ");
+            $.ajax({
+                type: "GET",
+                url: "/Estimate/UpdateDBNoRefresh",
+                data: data,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            });
+        });
+    </script>
+    <script>
+        function SelectionChanged(val) {
+            id = document.getElementById("budgetId").value;
+            window.location.href = "/Estimate/Create?budgetId=" + id + "&periodId=" + val + "&fiscalId=" + @ViewBag.FiscalId + "&year=" + @ViewBag.Year;
+        }
+</script>
+<script>
+          $(document).ready(function () {
+              $('#Sync-btn').click(function () {
+                  $(".modal").show();
+              });
+          });
+</script>
+}

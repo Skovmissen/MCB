@@ -1,0 +1,274 @@
+﻿@model BudgetManagerXame.Models.Estimate
+
+@{
+    ViewBag.Title = "Create";
+}
+@{
+    <div class="row">
+        <div class="col-lg-4">@Html.ActionLink("Synkroniser konti", "Sync", "Budget", new { id = ViewBag.BudgetId, FiscalId = ViewBag.FiscalId, siteId = 2, year = ViewBag.Year, firmName = ViewBag.FirmName }, new { @class = "btn btn-default my-btn", @id = "Sync-btn" }) @Html.ActionLink("Tilbage", "BudgetList", "Budget", new { id = ViewBag.FiscalId, firmName = ViewBag.FirmName }, null)</div>
+    </div>
+    <div class="row"><h2>Budget for år @ViewBag.Year</h2></div>
+
+
+
+    <table class="table table-bordered">
+        <tr>
+            <th class="head-cat">
+                Alle tal er i tusinde
+            </th>
+            <th class="head-cat">Total</th>
+            @foreach (var period in Model.Period)
+            {
+                <th class="head">@period.Name</th>
+            }
+        </tr>
+        <tr>
+            <td></td>
+            <td class="text-right"><div class="col-lg-6 my_header_div">Budget</div><div class="col-lg-6">Xena</div></td>
+            @foreach (var period in Model.Period)
+            {
+                <td class="text-right"><div class="col-lg-6 my_header_div">Budget</div><div class="col-lg-6">Xena</div></td>
+            }
+        </tr>
+        @foreach (var group in Model.FinanceGroup)
+        {
+            double total = 0;
+            double XenaTotal = 0;
+            int XenaTotalYear = 0;
+            int XenaAccountTotal = 0;
+            double AccountPercent = 0;
+            double GroupPercent = 0;
+            double percent = 0;
+            double AccountPeriodPercent = 0;
+            double amount = 0;
+            <tr>
+                <td class="my-td"><b>@group.Name</b></td>
+                @{
+                    foreach (var item in Model.TotalSumGroup)
+                    {
+                        if (item.Key == group.Name)
+                        {
+                            <td class="text-right">
+                                <div class="row my-border-row">
+                                    <div class="col-lg-6 my-border-div"><b>@item.Value</b></div>
+                                    <div class="col-lg-6">
+                                        @{
+                                            foreach (var CD in ViewBag.CDList)
+                                            {
+                                                if (CD.GroupName == group.Name)
+                                                {
+                                                    XenaTotalYear += CD.XenaAmount;
+                                                }
+                                            }
+                                            percent = Math.Round((XenaTotalYear / Convert.ToDouble(item.Value)) * 100);
+                                        }
+                                        <b>@XenaTotalYear</b>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    @if (percent > 100)
+                                    {
+                                        <div class="col-lg-12 text-center green_percent"><b>@percent %</b></div>
+                                    }
+                                    else if (percent < 100 && percent > 0)
+                                    {
+                                        <div class="col-lg-12 text-center red_percent"><b>@percent %</b></div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-lg-12 text-center green_percent"><b>@percent %</b></div>
+                                    }
+
+
+                                </div>
+                            </td>
+                                                }
+
+                                            }
+                }
+
+
+                @foreach (var per in Model.Period)
+                {
+                    foreach (var account in Model.FinanceAccount)
+                    {
+                        if (account.FinanceGroup == group.Name)
+                        {
+                            foreach (var estimate in Model.Fap)
+                            {
+                                if (estimate.AccountId == account.AccountId && estimate.PeriodId == per.Id)
+                                {
+                                    total += estimate.Estimate;
+
+                                }
+
+                            }
+
+                        }
+
+
+                    }
+                    <td class="text-right">
+                        <div class="row my-border-row">
+                            <div class="col-lg-6 my-border-div"><b>@total</b></div><div class="col-lg-6">
+                                @{
+                                    foreach (var item in ViewBag.CDList)
+                                    {
+
+                                        if (group.Name == item.GroupName && per.Id == item.XenaPeriodId)
+                                        {
+                                            XenaTotal += item.XenaAmount;
+
+                                        }
+
+                                    }
+                                    GroupPercent = Math.Round((XenaTotal / total) * 100);
+                                }
+
+                                <b>@XenaTotal</b>
+
+                            </div>
+                        </div><div class="row">
+                            @if (GroupPercent > 100)
+                            {
+                                <div class="col-lg-12 text-center green_percent"><b>@GroupPercent %</b></div>
+                            }
+                            else if (GroupPercent < 100 && GroupPercent > 0)
+                            {
+                                <div class="col-lg-12 text-center red_percent"><b>@GroupPercent %</b></div>
+                            }
+                            else
+                            {
+                                <div class="col-lg-12 text-center green_percent"><b>@GroupPercent %</b></div>
+                            }
+                        </div>
+                    </td>
+                                        total = 0;
+                                        XenaTotal = 0;
+                                    }
+
+
+            </tr>
+                                    foreach (var account in Model.FinanceAccount)
+                                    {
+                                        if (account.FinanceGroup == group.Name)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @account.Name
+                                                </td>
+                                                @foreach (var sum in Model.TotalDic)
+                                                {
+                                                    if (sum.Key == account.AccountId)
+                                                    {
+                                                        <td class="text-right">
+                                                            <div class="row my-border-row">
+                                                                <div class="col-lg-6 my-border-div">@sum.Value</div>
+                                                                <div class="col-lg-6">
+                                                                    @{
+                                                                        foreach (var CD in ViewBag.CDLIST)
+                                                                        {
+                                                                            if (account.AccountId == CD.XenaAccountId)
+                                                                            {
+                                                                                XenaAccountTotal += CD.XenaAmount;
+                                                                            }
+                                                                        }
+                                                                        AccountPercent = Math.Round((XenaAccountTotal / Convert.ToDouble(sum.Value)) * 100);
+                                                                    }
+                                                                    @XenaAccountTotal
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                @if (AccountPercent > 100)
+                                                                {
+                                                                    <div class="col-lg-12 text-center green_percent"><b>@AccountPercent %</b></div>
+                                                                }
+                                                                else if (AccountPercent < 100 && AccountPercent > 0)
+                                                                {
+                                                                    <div class="col-lg-12 text-center red_percent"><b>@AccountPercent %</b></div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="col-lg-12 text-center green_percent"><b>@AccountPercent %</b></div>
+                                                                }
+                                                            </div>
+                                                        </td>
+
+                                                                            }
+                                                                            XenaAccountTotal = 0;
+                                                                            AccountPercent = 0;
+
+                                                                        }
+
+
+                                                @foreach (var estimate in Model.Fap)
+                                                {
+
+                                                    if (estimate.AccountId == account.AccountId)
+                                                    {
+
+                                                        <td class="text-right">
+                                                            <div class="row my-border-row">
+                                                                <div class="col-lg-6 my-border-div">@estimate.Estimate</div><div class="col-lg-6">
+
+                                                                    @{
+                                                                        foreach (var item in ViewBag.CDList)
+                                                                        {
+                                                                            if (estimate.AccountId == item.XenaAccountId && estimate.PeriodId == item.XenaPeriodId)
+                                                                            {
+                                                                                amount = item.XenaAmount;
+                                                                                @item.XenaAmount
+                                                                            }
+
+                                                                        }
+                                                                        AccountPeriodPercent = Math.Round((amount / estimate.Estimate) * 100);
+
+                                                                    }
+
+
+
+                                                                </div>
+                                                            </div><div class="row">
+                                                                @if (AccountPeriodPercent > 100)
+                                                                {
+                                                                    <div class="col-lg-12 text-center green_percent"><b>@AccountPeriodPercent %</b></div>
+                                                                }
+                                                                else if (AccountPeriodPercent < 100 && AccountPeriodPercent > 0)
+                                                                {
+                                                                    <div class="col-lg-12 text-center red_percent"><b>@AccountPeriodPercent %</b></div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="col-lg-12 text-center green_percent"><b>@AccountPeriodPercent %</b></div>
+                                                                }
+                                                            </div>
+                                                        </td>
+                                                                            }
+
+                                                                        }
+
+                                            </tr>
+                                                                                }
+
+                                                                            }
+                                                                        }
+    </table>
+    <div class="modal" style="display: none">
+        <div class="center"><img alt="" src="~/Content/ajax-loader.gif" /></div>
+
+    </div>
+}
+
+@section scripts {
+
+    <script>
+        $(document).ready(function () {
+            $('#Sync-btn').click(function () {
+                $(".modal").show();
+            });
+        });
+    </script>
+
+}

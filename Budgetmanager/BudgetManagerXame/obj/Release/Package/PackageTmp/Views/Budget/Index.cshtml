@@ -1,0 +1,22 @@
+﻿@model BudgetManagerXame.Models.Budget
+
+@{
+    ViewBag.Title = "Choose Firm";
+}
+<div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-3">
+        <h2>Dine virksomheder</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3"></div>
+    @foreach (var item in Model.firmList)
+    {
+        <div class="col-lg-3">
+            
+            @Html.ActionLink(item.Key, "BudgetList", "Budget", new { id = item.Value, firmName = item.Key }, new { @class = "Firm-btn" }) 
+        </div>
+        
+    }
+</div>

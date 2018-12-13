@@ -1,0 +1,57 @@
+﻿@model BudgetManagerXame.Models.Budget
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Slet</h2>
+
+<h3>Er du sikker på du vil slette denne registrering?</h3>
+<div>
+
+    <h4>Registring</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Id")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("År")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Year)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Beskrivelse")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("FiscalId")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fiscalid)
+        </dd>
+
+    </dl>
+    @using (Html.BeginForm("DeleteConfirm", "Budget", new { id = Model.Id }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color">
+            <input type="submit" value="Slet" class="btn btn-default" /> |
+            @Html.ActionLink("Tilbage", "Index")
+        </div>
+    }
+</div>
+

@@ -1,0 +1,171 @@
+﻿/*Lavet Af: Nikolaj*/
+
+body {
+}
+
+.Login-btn {
+    background-color: #9bae07; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    -webkit-transition-duration: 0.1s; /* Safari */
+    transition-duration: 0.1s;
+    cursor: pointer;
+    position: relative;
+}
+
+    .Login-btn:hover {
+        background-color: #8b9c06;
+        color: white;
+        text-decoration: none;
+    }
+
+.my_login_col {
+    text-align: center;
+}
+
+.navbar-brand {
+    font-size: 30px;
+    color: white;
+    font-family: Ebrima;
+    margin-left: -30px;
+}
+
+    .navbar-brand:hover {
+        font-size: 30px;
+        color: #f2f2f2;
+    }
+
+
+.navbar-header {
+    margin-left: 20%;
+}
+
+.nav {
+    background: #9bae07 url(/Content/toppattern2.png);
+}
+
+.Firm-btn {
+    margin-top: 30px;
+    background-color: #9bae07; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    -webkit-transition-duration: 0.1s; /* Safari */
+    transition-duration: 0.1s;
+    cursor: pointer;
+    position: relative;
+}
+
+    .Firm-btn:hover {
+        background-color: #8b9c06;
+        color: white;
+        text-decoration: none;
+    }
+
+.Dropdown_Month {
+    margin-top: 30px;
+}
+
+.dropdown {
+    margin-left: 15px;
+    width: 250px;
+    height: 30px;
+}
+
+.my-btn {
+    background-color: #9bae07;
+    color: white;
+    text-decoration: none;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+    .my-btn:hover {
+        background-color: #8b9c06;
+        color: white;
+        text-decoration: none;
+    }
+.head {
+    width: 75px;
+    text-align: center;
+}
+.head-cat {
+    width: 85px;;
+}
+.container-fluid{
+    margin-left: 50px;
+    margin-right:50px;
+}
+.my-border-row {
+    border-bottom: solid 2px #9bae07;
+}
+.my-border-div {
+    border-right: solid 1px #9bae07;
+    height: 30px;
+    margin-top: -8px;
+    padding-top: 8px;
+    padding-left: 3px;
+}
+.row{
+    margin-left: -8px;
+    margin-right: -8px;
+}
+.table-bordered{
+    margin-top:20px;
+}
+.table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+    border: 2px solid #9bae07;
+}
+    .table-bordered > tr > .head {
+        text-align: center;
+    }
+.my-td{
+    width:120px;
+}
+.head-cat-create {
+    width: 75px;
+    text-align: center;
+    font-size:22px;
+}
+.modal {
+    position: fixed;
+    z-index: 999;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: Black;
+    filter: alpha(opacity=60);
+    opacity: 0.8;
+    
+}
+
+.center {
+    z-index: 1000;
+    margin: 300px auto;
+    padding: 10px;
+    width: 120px;
+    background-color: White;
+    border-radius: 10px;
+    filter: alpha(opacity=100);
+    opacity: 1;
+}
+.my_header_div{
+    margin-left:-15px;
+    margin-right:8px;
+}
+.green_percent {
+    color: #00b300;
+}
+.red_percent{
+    color:red;
+}

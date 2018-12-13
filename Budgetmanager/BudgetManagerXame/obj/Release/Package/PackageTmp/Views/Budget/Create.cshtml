@@ -1,0 +1,57 @@
+﻿@model BudgetManagerXame.Models.Budget
+
+@{
+    ViewBag.Title = "Create";
+}
+<div style="font-family:Arial">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Budget</h4>
+            <hr />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Year, "År", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Year, new { @type = "number",  Value = "", placeholder = "År", @class = "form-control" })
+                 
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, "Beskrivelse", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Description, new { placeholder = "Beskrivelse", @class = "form-control" })
+                    @Html.HiddenFor(model => model.Fiscalid, new { Value = Model.Fiscalid })
+                   
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" id="opret" value="Opret" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+</div>
+<div class="modal" style="display: none">
+    <div class="center"><img alt="" src="~/Content/ajax-loader.gif" /></div>
+
+</div>
+@section scripts {
+
+    <script>
+        $(document).ready(function () {
+            $('#opret').click(function () {
+                $(".modal").show();
+            });
+        });
+    </script>
+
+}

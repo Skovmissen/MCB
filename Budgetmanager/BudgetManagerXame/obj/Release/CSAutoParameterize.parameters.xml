@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="dbConnection-Web.config Connection String" description="dbConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=tcp:budgetmanager.database.windows.net,1433;Initial Catalog=BudgetManagerExam;Persist Security Info=False;User ID=Budgetmanager;Password=Dinmor123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Skole\\SystemudviklingEksamen\\Kode\\BudgetManagerXame\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='dbConnection']/@connectionString" />
+  </parameter>
+</parameters>

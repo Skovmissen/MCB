@@ -1,0 +1,52 @@
+﻿@model BudgetManagerXame.Models.Budget
+@{
+    ViewBag.Title = "Budgets";
+}
+<div class="row">
+    <h2>Velkommen til, <b>@Model.FirmName</b>'s budgetter!</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">År</th>
+                <th scope="col">Beskrivelse</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.BudgetList)
+            {
+                <tr>
+                    <td>@item["Year"]</td>
+                    <td>@item["Description"]</td>
+                    <td></td>
+                    <td class="text-right">@Html.ActionLink("Inddatere", "Create", "Estimate", new { budgetId = item["Id"], periodId = 1, fiscalId = item["FiscalId"], firmName = Model.FirmName, year = item["Year"] }, null) | @Html.ActionLink("Oversigt", "Show", "Estimate", new { budgetId = item["Id"], year = item["Year"], fiscalId = item["FiscalId"], firmName = Model.FirmName }, new { @class = "Oversigt" }) | @Html.ActionLink("Slet", "Delete", new { id = item["Id"] })  </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @Html.ActionLink("Opret Nyt Budget", "Create", "Budget", new { fiscalId = Model.Fiscalid}, new { @class = "Login-btn" })
+</div>
+<div class="modal" style="display: none">
+    <div class="center"><img alt="" src="~/Content/ajax-loader.gif" /></div>
+
+</div>
+@section scripts {
+
+    <script>
+        $(document).ready(function () {
+            $('.Oversigt').click(function () {
+                $(".modal").show();
+            });
+        });
+    </script>
+
+}
+
+
+
+
+
+
